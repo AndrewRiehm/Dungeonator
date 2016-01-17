@@ -1,6 +1,5 @@
-angular.module('starter.controllers', [])
 
-.controller('CampaignsCtrl', function($scope) {})
+angular.module('starter.controllers', [])
 
 .controller('BuffsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
@@ -14,15 +13,5 @@ angular.module('starter.controllers', [])
   $scope.chats = Chats.all();
   $scope.remove = function(chat) {
     Chats.remove(chat);
-  };
-})
-
-.controller('BuffDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
   };
 });
