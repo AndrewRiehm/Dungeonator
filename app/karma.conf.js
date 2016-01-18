@@ -21,10 +21,11 @@ module.exports = function(config) {
       'www/lib/angular-ui-router/release/angular-ui-router.js',
       'www/lib/angular-mocks/angular-mocks.js',
       'www/lib/ionic/js/ionic-bundle.js',
-      'www/js/app.js',
-      'www/js/components/*.js',
-      'www/js/services/*.js',
-      'www/js/**/*Spec.js'
+      'www/app.js',
+      'www/components/buffs/*.js',
+      'www/components/campaigns/*.js',
+      'www/components/settings/*.js',
+      'www/components/**/*Spec.js',
     ],
 
 
