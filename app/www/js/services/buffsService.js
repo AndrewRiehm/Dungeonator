@@ -4,13 +4,13 @@
 
     angular
         .module('starter.services', [])
-        .factory('Chats', chatsServiceFunc);
+        .factory('Buffs', buffsServiceFunc);
 
-    function chatsServiceFunc() {
+    function buffsServiceFunc() {
         // Might use a resource here that returns a JSON array
 
         // Some fake testing data
-        var chats = [
+        var buffs = [
             {
                 id: 0,
                 name: 'Ben Sparrow',
@@ -45,15 +45,15 @@
 
         return {
             all: function() {
-                     return chats;
+                     return buffs;
                  },
-            remove: function(chat) {
-                        chats.splice(chats.indexOf(chat), 1);
+            remove: function(buff) {
+                        buffs.splice(buffs.indexOf(buff), 1);
                     },
-            get: function(chatId) {
-                     for (var i = 0; i < chats.length; i++) {
-                         if (chats[i].id === parseInt(chatId)) {
-                             return chats[i];
+            get: function(buffId) {
+                     for (var i = 0; i < buffs.length; i++) {
+                         if (buffs[i].id === parseInt(buffId)) {
+                             return buffs[i];
                          }
                      }
                      return null;
