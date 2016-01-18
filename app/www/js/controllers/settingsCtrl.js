@@ -1,8 +1,15 @@
 
-angular.module('starter.controllers', [])
+(function() {
+    'use strict';
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-});
+    angular
+        .module('starter.controllers', [])
+        .controller('AccountCtrl', accountCtrlFunc);
+
+    function accountCtrlFunc($scope) {
+        $scope.settings = {
+            enableFriends: true
+        };
+    }
+
+})();

@@ -1,0 +1,19 @@
+{
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "maxdepth": 3,
+    "maxcomplexity": 5,
+    "strict": true,
+    "undef": true,
+    "unused": true,
+    "globals": {
+        "angular": false,
+        "window": false,
+        "cordova": false,
+        "StatusBar": false,
+        "ngRoute": false,
+        "module": false,
+        "console": false
+    }
+}

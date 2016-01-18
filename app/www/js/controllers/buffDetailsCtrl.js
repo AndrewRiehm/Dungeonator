@@ -1,6 +1,13 @@
 
-angular.module('starter.controllers', [])
+(function() {
+    'use strict';
 
-.controller('BuffDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-});
+    angular
+        .module('starter.controllers', [])
+        .controller('BuffDetailCtrl', buffDetailCtrlFunc);
+
+    function buffDetailCtrlFunc($scope, $stateParams, Chats) {
+      $scope.chat = Chats.get($stateParams.chatId);
+    }
+
+})();
