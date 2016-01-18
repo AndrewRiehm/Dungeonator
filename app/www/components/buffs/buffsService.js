@@ -41,33 +41,37 @@
     var buffs = [
         {
             id: 0,
-            name: 'Ben Sparrow',
-            lastText: 'You on your way?',
-            face: 'img/ben.png'
+            name: 'Good Hope',
+            saves: {
+                fort: 2,
+                refl: 2,
+                will: 2
+            },
+            attack: 2,
+            damage: 2,
+            skills: 2,
+            type: 'morale'
         },
         {
             id: 1,
-            name: 'Max Lynx',
-            lastText: 'Hey, it\'s me',
-            face: 'img/max.png'
+            name: 'Inspire Courage',
+            attack: 3,
+            damage: 3,
+            type: 'competence'
         },
         {
             id: 2,
-                name: 'Adam Bradleyson',
-                lastText: 'I should buy a boat',
-                face: 'img/adam.jpg'
+            name: 'Haste',
+            attack: 1,
+            saves: {
+                refl: 2,
+            },
+            extraHit: true
         },
         {
             id: 3,
-                name: 'Perry Governor',
-                lastText: 'Look at my mukluks!',
-                face: 'img/perry.png'
-        },
-        {
-            id: 4,
-            name: 'Mike Harrington',
-            lastText: 'This is wicked good ice cream.',
-            face: 'img/mike.png'
+            name: 'Flanking',
+            attack: 2
         }
     ];
 

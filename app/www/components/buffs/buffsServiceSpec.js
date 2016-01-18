@@ -6,10 +6,11 @@
 
         var buffService;
         var testBuff = {
-            id: 5,
-            name: 'bob hope',
-            lastTest: 'sure thing, bob!',
-            face: 'img/mike.png'
+            id: 4,
+            name: 'Divine Power',
+            attack: 4,
+            damage: 4,
+            type: 'luck'
         };
 
         beforeEach(function() {
