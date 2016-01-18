@@ -1,8 +1,25 @@
 <ion-view view-title="{{buff.name}}">
-  <ion-content class="padding">
-    <img ng-src="{{buff.face}}" style="width: 64px; height: 64px">
-    <p>
-      {{buff.lastText}}
-    </p>
-  </ion-content>
+    <ion-content class="padding">
+        <label class="item item-input">
+            <span class="input-label">Name:</span>
+            <input ng-model="buff.name" type="text">
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Attack</span>
+            <input ng-model="buff.attack" type="number">
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Damage</span>
+            <input ng-model="buff.damage" type="number">
+        </label>
+        <label class="item item-input">
+            <span class="input-label">Extra Hit?</div>
+            <label class="toggle">
+                <input ng-model="buff.extraHit" type="checkbox">
+                <div class="track">
+                    <div class="handle"></div>
+                </div>
+            </label>
+        </label>
+    </ion-content>
 </ion-view>
