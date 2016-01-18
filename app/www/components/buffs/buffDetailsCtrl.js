@@ -7,7 +7,7 @@
         .controller('BuffDetailCtrl', buffDetailCtrlFunc);
 
     function buffDetailCtrlFunc($scope, $stateParams, Buffs) {
-      $scope.buff = Buffs.get($stateParams.buffId);
+      $scope.buff = Buffs.get($stateParams.buffName);
     }
 
 })();

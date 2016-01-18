@@ -72,7 +72,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     })
 
   .state('tab.buff-detail', {
-      url: '/buffs/:buffId',
+      url: '/buffs/:buffName',
       views: {
         'tab-buffs': {
           templateUrl: 'components/buffs/buff-detail.html',

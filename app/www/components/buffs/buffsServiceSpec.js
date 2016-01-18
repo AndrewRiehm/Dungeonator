@@ -6,7 +6,6 @@
 
         var buffService;
         var testBuff = {
-            id: 4,
             name: 'Divine Power',
             attack: 4,
             damage: 4,
@@ -50,7 +49,7 @@
         });
 
         it('should be able to get a buff', function() {
-            var test = buffService.get(testBuff.id);
+            var test = buffService.get(testBuff.name);
             expect(test).toBe(testBuff);
         });
 

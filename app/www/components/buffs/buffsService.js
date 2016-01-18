@@ -15,9 +15,9 @@
         };
     }
 
-    function buffGet(buffId) {
+    function buffGet(buffName) {
         for (var i = 0; i < buffs.length; i++) {
-            if (buffs[i].id === parseInt(buffId)) {
+            if (buffs[i].name === buffName) {
                 return buffs[i];
             }
         }
@@ -40,7 +40,6 @@
     // Some fake testing data
     var buffs = [
         {
-            id: 0,
             name: 'Good Hope',
             saves: {
                 fort: 2,
@@ -53,14 +52,12 @@
             type: 'morale'
         },
         {
-            id: 1,
             name: 'Inspire Courage',
             attack: 3,
             damage: 3,
             type: 'competence'
         },
         {
-            id: 2,
             name: 'Haste',
             attack: 1,
             saves: {
@@ -69,7 +66,6 @@
             extraHit: true
         },
         {
-            id: 3,
             name: 'Flanking',
             attack: 2
         }
