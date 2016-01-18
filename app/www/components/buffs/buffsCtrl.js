@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('starter.controllers', ['ionic'])
+        .module('starter.controllers')
         .controller('BuffsCtrl', buffsCtrlFunc);
 
     function buffsCtrlFunc($scope, Buffs, $ionicPopup) {

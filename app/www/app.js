@@ -5,7 +5,7 @@
 
     // Forward declaration of controllers module
     angular
-        .module('starter.controllers', []);
+        .module('starter.controllers', ['ionic']);
 
     // Forward declaration of services module
     angular
