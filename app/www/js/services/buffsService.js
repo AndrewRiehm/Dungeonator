@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('starter.services', [])
+        .module('starter.services')
         .factory('Buffs', buffsServiceFunc);
 
     function buffsServiceFunc() {

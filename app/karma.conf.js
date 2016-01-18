@@ -10,19 +10,21 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'requirejs'],
+    frameworks: ['jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'test-main.js',
       'www/lib/angular/angular.js',
       'www/lib/angular-animate/angular-animate.js',
       'www/lib/angular-sanitize/angular-sanitize.js',
       'www/lib/angular-ui-router/release/angular-ui-router.js',
-      'www/lib/ionic/js/ionic.js',
-      'www/lib/ionic/js/ionic-angular.js',
-      {pattern: 'www/js/**/*.js', included: false},
+      'www/lib/angular-mocks/angular-mocks.js',
+      'www/lib/ionic/js/ionic-bundle.js',
+      'www/js/app.js',
+      'www/js/components/*.js',
+      'www/js/services/*.js',
+      'www/js/**/*Spec.js'
     ],
 
 
