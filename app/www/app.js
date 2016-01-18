@@ -46,7 +46,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     .state('tab', {
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'tabs.html'
   })
 
   // Each tab has its own nav history stack:
@@ -55,7 +55,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/campaigns',
     views: {
       'tab-campaigns': {
-        templateUrl: 'templates/tab-campaigns.html',
+        templateUrl: 'components/campaigns/tab-campaigns.html',
         controller: 'CampaignsCtrl'
       }
     }
@@ -65,7 +65,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: '/buffs',
       views: {
         'tab-buffs': {
-          templateUrl: 'templates/tab-buffs.html',
+          templateUrl: 'components/buffs/tab-buffs.html',
           controller: 'BuffsCtrl'
         }
       }
@@ -75,7 +75,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: '/buffs/:buffId',
       views: {
         'tab-buffs': {
-          templateUrl: 'templates/buff-detail.html',
+          templateUrl: 'components/buffs/buff-detail.html',
           controller: 'BuffDetailCtrl'
         }
       }
@@ -85,7 +85,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/account',
     views: {
       'tab-account': {
-        templateUrl: 'templates/tab-account.html',
+        templateUrl: 'components/settings/tab-account.html',
         controller: 'AccountCtrl'
       }
     }
