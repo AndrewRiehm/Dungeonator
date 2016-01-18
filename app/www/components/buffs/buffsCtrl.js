@@ -20,31 +20,39 @@
             Buffs.remove(buff);
         };
 
-        $scope.showNewBuffForm = showNewBuffForm.bind(this, $scope, $ionicPopup, Buffs);
+        $scope.showNewBuffForm = showNewBuffForm.bind(null, $scope, $ionicPopup, Buffs);
     }
 
     function showNewBuffForm($scope, $ionicPopup, Buffs) {
         $ionicPopup.prompt(
         {
             title: 'New Buff',
-            template: 'Enter the Buff Name: ',
             inputType: 'text',
             inputPlaceholder: 'Buff Name'
         })
         .then(function(res) {
             if (res !== undefined) {
-                addNewBuff(Buffs, res);
+                addNewBuff(Buffs, res, $ionicPopup);
             }
         });
     }
 
-    function addNewBuff(Buffs, buffName) {
+    function addNewBuff(Buffs, buffName, $ionicPopup) {
+
         var obj = {
             name: buffName,
             attack: 0,
             damage: 0,
             extraHit: false
         };
-        Buffs.add(obj);
+
+        Buffs.add(obj, function(err, res) {
+            if (err) {
+                $ionicPopup.alert({
+                    title: 'Oops!',
+                    template: '"' + buffName + '" is already taken!',
+                });
+            }
+        });
     }
 })();

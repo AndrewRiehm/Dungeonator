@@ -53,10 +53,19 @@
             expect(test).toBe(testBuff);
         });
 
+        it('should not let you add a duplicate', function(done) {
+            buffService.add(testBuff, function(err, res) {
+                expect(err).toBeDefined();
+                expect(err).not.toBeNull();
+                done();
+            });
+        });
+
         it('should be able to remove a buff', function() {
             var howMany = buffService.all().length;
             buffService.remove(testBuff);
             expect(buffService.all().length).toBe(howMany - 1);
         });
+
     });
 })();

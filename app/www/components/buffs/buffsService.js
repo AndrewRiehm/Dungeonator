@@ -28,8 +28,21 @@
         buffs.splice(buffs.indexOf(buff), 1);
     }
 
-    function buffAdd(buff) {
-        return buffs.push(buff);
+    function buffAdd(buff, cb) {
+        for(var index in buffs) {
+            var b = buffs[index];
+            if (b.name === buff.name) {
+                if (cb) {
+                    cb({ message: 'Error: ' + buff.name + ' already exists!' }, null);
+                }
+                return;
+            }
+        }
+        buffs.push(buff);
+
+        if (cb) {
+            cb(null, buff);
+        }
     }
 
     function buffAll() {
