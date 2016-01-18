@@ -8,6 +8,11 @@
     "undef": true,
     "unused": true,
     "globals": {
+        "describe": false,
+        "it": false,
+        "inject": false,
+        "beforeEach": false,
+        "expect": false,
         "angular": false,
         "window": false,
         "cordova": false,
