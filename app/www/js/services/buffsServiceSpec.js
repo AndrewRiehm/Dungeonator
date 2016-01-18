@@ -5,6 +5,13 @@
     describe('BuffsService', function () {
 
         var buffService;
+        var testBuff = {
+            id: 5,
+            name: 'bob hope',
+            lastTest: 'sure thing, bob!',
+            face: 'img/mike.png'
+        };
+
         beforeEach(function() {
             module('starter.services');
             inject(
@@ -29,6 +36,27 @@
 
         it('should have a "get" method', function() {
             expect(angular.isFunction(buffService.get)).toBe(true);
+        });
+
+        it('should have an "add" method', function() {
+            expect(angular.isFunction(buffService.add)).toBe(true);
+        });
+
+        it('should be able to add a buff', function() {
+            var howMany = buffService.all().length;
+            buffService.add(testBuff);
+            expect(buffService.all().length).toBe(howMany + 1);
+        });
+
+        it('should be able to get a buff', function() {
+            var test = buffService.get(testBuff.id);
+            expect(test).toBe(testBuff);
+        });
+
+        it('should be able to remove a buff', function() {
+            var howMany = buffService.all().length;
+            buffService.remove(testBuff);
+            expect(buffService.all().length).toBe(howMany - 1);
         });
     });
 })();
