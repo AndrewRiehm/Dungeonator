@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('starter.controllers', [])
+        .module('starter.controllers')
         .controller('BuffsCtrl', buffsCtrlFunc);
 
     function buffsCtrlFunc($scope, Chats) {
