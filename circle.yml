@@ -1,7 +1,7 @@
 
 dependencies:
     override:
-        - cd app && npm install
+        - cd app && npm install && ./node_modules/.bin/bower install
 
 test:
     override:
