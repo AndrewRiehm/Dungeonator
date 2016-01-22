@@ -1,0 +1,8 @@
+
+dependencies:
+    override:
+        - cd app && npm install
+
+test:
+    override:
+        - cd app && npm test
