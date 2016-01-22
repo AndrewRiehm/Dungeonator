@@ -30,6 +30,6 @@
   ],
   "cordovaPlatforms": [],
   "scripts": {
-    "test": "./node_modules/.bin/karma start"
+    "test": "./node_modules/.bin/karma start --single-run"
   }
 }
