@@ -46,7 +46,7 @@
             extraHit: false
         };
 
-        Buffs.add(obj, function(err, res) {
+        Buffs.add(obj, function(err) {
             if (err) {
                 $ionicPopup.alert({
                     title: 'Oops!',

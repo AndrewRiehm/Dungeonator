@@ -54,7 +54,7 @@
         });
 
         it('should not let you add a duplicate', function(done) {
-            buffService.add(testBuff, function(err, res) {
+            buffService.add(testBuff, function(err) {
                 expect(err).toBeDefined();
                 expect(err).not.toBeNull();
                 done();
