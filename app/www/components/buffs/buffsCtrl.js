@@ -6,7 +6,7 @@
         .module('starter.controllers')
         .controller('BuffsCtrl', buffsCtrlFunc);
 
-    function buffsCtrlFunc($scope, Buffs, $ionicPopup) {
+    function buffsCtrlFunc($scope, NewWidget, Buffs, $ionicPopup) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -20,39 +20,25 @@
             Buffs.remove(buff);
         };
 
-        // $scope.showNewBuffForm = showNewBuffForm.bind(null, $scope, $ionicPopup, Buffs);
-    }
+        $scope.showNewBuffForm = function() {
+            NewWidget.show('New Buff', function(name) {
 
-    function showNewBuffForm($scope, $ionicPopup, Buffs) {
-        $ionicPopup.prompt(
-        {
-            title: 'New Buff',
-            inputType: 'text',
-            inputPlaceholder: 'Buff Name'
-        })
-        .then(function(res) {
-            if (res !== undefined) {
-                addNewBuff(Buffs, res, $ionicPopup);
-            }
-        });
-    }
+                var obj = {
+                    name: name,
+                    attack: 0,
+                    damage: 0,
+                    extraHit: false
+                };
 
-    function addNewBuff(Buffs, buffName, $ionicPopup) {
-
-        var obj = {
-            name: buffName,
-            attack: 0,
-            damage: 0,
-            extraHit: false
-        };
-
-        Buffs.add(obj, function(err) {
-            if (err) {
-                $ionicPopup.alert({
-                    title: 'Oops!',
-                    template: '"' + buffName + '" is already taken!',
+                Buffs.add(obj, function(err) {
+                    if (err) {
+                        $ionicPopup.alert({
+                            title: 'Oops!',
+                            template: '"' + buffName + '" is already taken!',
+                        });
+                    }
                 });
-            }
-        });
+            });
+        };
     }
 })();
