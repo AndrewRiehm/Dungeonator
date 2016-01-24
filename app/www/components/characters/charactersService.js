@@ -61,11 +61,15 @@
     var characters = [
         {
             name: 'Billy Connoly',
-            campaignName: 'Wrath of the Righteous'
+            campaignName: 'Wrath of the Righteous',
+            weapons: []
         },
         {
             name: 'Bilbo Baggins',
-            campaignName: 'Underhill Adventures'
+            campaignName: 'Underhill Adventures',
+            weapons: [
+                { name: 'sting', attacks: [] }
+            ]
         }
     ];
 
