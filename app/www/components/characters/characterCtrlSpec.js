@@ -34,6 +34,39 @@
             expect(scope.character.weapons).toBeDefined();
         });
 
+        it('should have a list of active buffs', function() {
+            expect(scope.activeBuffs).not.toBeNull();
+            expect(scope.activeBuffs).toBeDefined();
+            expect(Array.isArray(scope.activeBuffs)).toBeTruthy();
+        });
+
+        it('should have a list of buffs', function() {
+            expect(scope.buffs).not.toBeNull();
+            expect(scope.buffs).toBeDefined();
+            expect(Array.isArray(scope.buffs)).toBeTruthy();
+        });
+
+        it('should make sure activeBuffs.len == buffs.len', function() {
+            expect(scope.buffs.length).toBe(scope.activeBuffs.length);
+        });
+
+        it('should keep character list of active buffs in sync', function() {
+            var active = scope.activeBuffs;
+
+            // Make sure to process the $watch call
+            scope.$digest();
+
+            // Make sure they match initially
+            expect(scope.character.activeBuffs[0] === scope.activeBuffs[0]).toBeTruthy();
+
+            // Make a change, reprocess
+            active[0] = !active[0];
+            scope.$digest();
+
+            // Make sure they still match
+            expect(scope.character.activeBuffs[0] === scope.activeBuffs[0]).toBeTruthy();
+        });
+
         it('should have an addWeapon function', function() {
             expect(scope.addWeapon).not.toBeNull();
             expect(scope.addWeapon).toBeDefined();

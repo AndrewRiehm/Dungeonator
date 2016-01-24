@@ -78,6 +78,5 @@
             charactersService.remove(testCharacter);
             expect(charactersService.all().length).toBe(howMany - 1);
         });
-
     });
 })();
