@@ -61,6 +61,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
+  .state('tab.campaigns-characters', {
+    url: '/campaigns/:campaignName',
+    views: {
+      'tab-campaigns': {
+        templateUrl: 'components/characters/list-characters.html',
+        controller: 'CharactersCtrl'
+      }
+    }
+  })
+
   .state('tab.buffs', {
       url: '/buffs',
       views: {
@@ -92,7 +102,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/campaigns');
 
 });
 
