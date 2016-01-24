@@ -91,12 +91,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
-  .state('tab.account', {
-    url: '/account',
+  .state('tab.settings', {
+    url: '/settings',
     views: {
-      'tab-account': {
-        templateUrl: 'components/settings/tab-account.html',
-        controller: 'AccountCtrl'
+      'tab-settings': {
+        templateUrl: 'components/settings/tab-settings.html',
+        controller: 'SettingsCtrl'
       }
     }
   });

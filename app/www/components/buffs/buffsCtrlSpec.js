@@ -34,5 +34,4 @@
             expect(scope.buffs.length).toBeLessThan(len);
         });
     });
-
 })();
