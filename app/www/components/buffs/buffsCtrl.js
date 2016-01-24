@@ -20,7 +20,7 @@
             Buffs.remove(buff);
         };
 
-        $scope.showNewBuffForm = showNewBuffForm.bind(null, $scope, $ionicPopup, Buffs);
+        // $scope.showNewBuffForm = showNewBuffForm.bind(null, $scope, $ionicPopup, Buffs);
     }
 
     function showNewBuffForm($scope, $ionicPopup, Buffs) {
