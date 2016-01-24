@@ -34,7 +34,7 @@
                     if (err) {
                         $ionicPopup.alert({
                             title: 'Oops!',
-                            template: '"' + buffName + '" is already taken!',
+                            template: '"' + name + '" is already taken!',
                         });
                     }
                 });

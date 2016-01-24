@@ -5,13 +5,6 @@
     describe('NewWidgetService', function () {
 
         var service;
-        var testBuff = {
-            name: 'Divine Power',
-            attack: 4,
-            damage: 4,
-            type: 'luck'
-        };
-
         beforeEach(function() {
             module('starter.services');
             inject(

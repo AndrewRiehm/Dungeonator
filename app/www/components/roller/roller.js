@@ -45,15 +45,15 @@
     }
 
     function rollAttacks(attacks, buffs) {
-        var rolls = [];
-        for (var i in attacks) {
+        var i, rolls = [];
+        for (i in attacks) {
             rolls.push(rollSingleAttack(attacks[i], buffs));
         }
 
         // Buffs might add an extra attack
         // ... but extra attacks don't stack, so bail after the first one
         var buff;
-        for (var i in buffs) {
+        for (i in buffs) {
             buff = buffs[i];
             if (buff.extraHit) {
                 rolls.push(rollSingleAttack(attacks[0], buffs));
