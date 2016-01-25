@@ -16,7 +16,7 @@
     }
 
     function rollSingleAttack(attack, buffs) {
-        var toHit, dmg, critConf, critDmg;
+        var toHit, dmg, critConf, critDmg, whif = false;
 
         // compile buffs
         var totalBuff = compileBuffs(buffs);
@@ -27,11 +27,16 @@
         // TODO: roll for damage?
         dmg = attack.damage + totalBuff.damage;
 
+        // Check for critical miss
+        if (toHit - attack.toHit === 1) {
+            whif = true;
+        }
+
         // Check for crit threat
         if (toHit - attack.toHit >= attack.crit) {
             // Need another toHit roll
             critConf = roll(1, 20, attack.toHit);
-            critDmg = (attack.damage + totalBuff.damage) * attack.mult;
+            critDmg = (attack.damage + totalBuff.damage) * attack.critMult;
         }
 
         // TODO: buffs!
@@ -40,7 +45,8 @@
             damage: dmg,
             crit: critConf !== undefined,
             critConf: critConf + totalBuff.toHit,
-            critDmg: critDmg
+            critDmg: critDmg,
+            whif: whif
         };
     }
 

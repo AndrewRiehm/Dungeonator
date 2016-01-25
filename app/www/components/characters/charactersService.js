@@ -30,6 +30,10 @@
     function compileActiveBuffs(character, buffs) {
         var activeBuffs = [], msg;
 
+        if (!character.activeBuffs) {
+            return activeBuffs;
+        }
+
         // If the size of list of active != size of list of buffs, THAT's
         // a problem.  They have to match for this to work.
         if (character.activeBuffs.length !== buffs.length) {

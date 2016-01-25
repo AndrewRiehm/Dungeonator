@@ -6,27 +6,58 @@
         .module('starter.controllers')
         .controller('WeaponCtrl', ctrlFunc);
 
-    function ctrlFunc($scope,$stateParams, NewWidget, Characters, Roller, Buffs, $ionicPopup) {
-        $scope.Roller = Roller;
-        $scope.characterName = $stateParams.characterName;
-        $scope.character = Characters.get($scope.characterName);
-        $scope.weaponName = $stateParams.weaponName;
-        $scope.weapon = Characters.getWeapon($scope.character, $scope.weaponName);
-        if ($scope.weapon === null) {
-            var msg = 'ERROR: could not get weapon with name "' + $scope.weaponName + '"';
-            console.error(msg);
-            throw(msg);
-        }
-        if (!$scope.weapon.attacks) {
-            $scope.weapon.attacks = [];
-        }
+    function ctrlFunc($scope, $stateParams, NewWidget, Characters, Roller, Buffs, $ionicPopup) {
 
-        $scope.activeBuffs = Characters.compileActiveBuffs($scope.character, Buffs.all());
+        checkCharacter($scope, $stateParams, Characters, Buffs);
+        checkWeapon($scope, $stateParams, Characters, Buffs);
+
+        $scope.Roller = Roller;
         $scope.remove = remove;
         $scope.add = add;
+        $scope.doneAttacking = function() {
+            $scope.attackRolls = [];
+            $scope.actualHits = [];
+            $scope.crits = [];
+            $scope.showCard = 'main';
+        };
 
-        $scope.rollOne = rollOne;
-        $scope.rollAll = rollAll;
+        $scope.rollOne = function() {
+            $scope.attackRolls = [ Roller.rollSingleAttack($scope.weapon.attacks[0], $scope.activeBuffs) ];
+            $scope.actualHits = [];
+            $scope.crits = [];
+            $scope.preCheck();
+            $scope.showCard = 'oneAttack';
+        };
+
+        $scope.rollAll = function() {
+            $scope.attackRolls = Roller.rollAttacks($scope.weapon.attacks, $scope.activeBuffs);
+            $scope.actualHits = [];
+            $scope.crits = [];
+            $scope.preCheck();
+            $scope.showCard = 'allAttacks';
+        };
+
+        $scope.preCheck = function() {
+            for (var i in $scope.attackRolls) {
+                if (!$scope.attackRolls[i].whif) {
+                    $scope.actualHits[i] = true;
+                }
+                $scope.crits[i] = $scope.attackRolls[i].crit;
+            }
+        };
+
+        $scope.calculateDamage = function() {
+            var total = 0;
+            for (var i in $scope.attackRolls) {
+                if ($scope.crits[i]) {
+                    total += $scope.attackRolls[i].critDmg;
+                }
+                else if ($scope.actualHits[i]) {
+                    total += $scope.attackRolls[i].damage;
+                }
+            }
+            $scope.totalDamage = total;
+        };
 
         $scope.showNewForm = function () {
             NewWidget.show('New Attack', function(name) {
@@ -46,18 +77,50 @@
                 }
             });
         };
+
+        $scope.doneAttacking();
+        $scope.$watchCollection('crits', $scope.calculateDamage);
+        $scope.$watchCollection('actualHits', $scope.calculateDamage);
     }
 
-    function rollOne(Roller, attack, buffs) {
-        console.info('rolling one: ', JSON.stringify(attack));
-        var roll = Roller.rollSingleAttack(attack, buffs);
-        console.info('roll!: ', JSON.stringify(roll));
+    function checkCharacter($scope, $stateParams, Characters) {
+        var msg;
+        $scope.characterName = $stateParams.characterName;
+        if (!$scope.characterName) {
+            msg = 'ERROR: could not get character name from $stateParams';
+            console.error(msg);
+            throw(msg);
+        }
+
+        $scope.character = Characters.get($scope.characterName);
+        if (!$scope.character) {
+            msg = 'ERROR: could not get character from CharactersService';
+            console.error(msg);
+            throw(msg);
+        }
     }
 
-    function rollAll(Roller, attacks, buffs) {
-        console.info('rolling all: ', JSON.stringify(attacks));
-        var rolls = Roller.rollAttacks(attacks, buffs);
-        console.info('rolls: ', JSON.stringify(rolls));
+    function checkWeapon($scope, $stateParams, Characters, Buffs) {
+        var msg;
+        $scope.weaponName = $stateParams.weaponName;
+        if (!$scope.weaponName) {
+            msg = 'ERROR: could not get weaponName from $stateParams';
+            console.error(msg);
+            throw(msg);
+        }
+
+        $scope.weapon = Characters.getWeapon($scope.character, $scope.weaponName);
+        if ($scope.weapon === null) {
+            msg = 'ERROR: could not get weapon with name "' + $scope.weaponName + '"';
+            console.error(msg);
+            throw(msg);
+        }
+
+        if (!$scope.weapon.attacks) {
+            $scope.weapon.attacks = [];
+        }
+
+        $scope.activeBuffs = Characters.compileActiveBuffs($scope.character, Buffs.all());
     }
 
     function remove(weapon, attack) {
