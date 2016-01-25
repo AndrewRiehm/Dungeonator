@@ -59,20 +59,20 @@
                 refl: 2,
                 will: 2
             },
-            attack: 2,
+            toHit: 2,
             damage: 2,
             skills: 2,
             type: 'morale'
         },
         {
             name: 'Inspire Courage',
-            attack: 3,
+            toHit: 3,
             damage: 3,
             type: 'competence'
         },
         {
             name: 'Haste',
-            attack: 1,
+            toHit: 1,
             saves: {
                 refl: 2,
             },
@@ -80,7 +80,7 @@
         },
         {
             name: 'Flanking',
-            attack: 2
+            toHit: 2
         }
     ];
 

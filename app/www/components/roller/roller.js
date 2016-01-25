@@ -96,8 +96,12 @@
         var buff;
         for (var i in buffs) {
             buff = buffs[i];
-            totalBuff.toHit += buff.toHit;
-            totalBuff.damage += buff.damage;
+            if (typeof buff.toHit === 'number') {
+                totalBuff.toHit += buff.toHit;
+            }
+            if (typeof buff.damage === 'number') {
+                totalBuff.damage += buff.damage;
+            }
             if (buff.extraHit) {
                 totalBuff.extraHit = true;
             }

@@ -7,7 +7,7 @@
         var buffService;
         var testBuff = {
             name: 'Divine Power',
-            attack: 4,
+            toHit: 4,
             damage: 4,
             type: 'luck'
         };
