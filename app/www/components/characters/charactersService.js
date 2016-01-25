@@ -12,9 +12,20 @@
             add: characterAdd,
             remove: characterRemove,
             get: characterGet,
-            compileActiveBuffs: compileActiveBuffs
+            compileActiveBuffs: compileActiveBuffs,
+            getWeapon: getWeapon
         };
     }
+
+    function getWeapon(character, weaponName) {
+        for(var i in character.weapons) {
+            if (character.weapons[i].name === weaponName) {
+                return character.weapons[i];
+            }
+        }
+        return null;
+    }
+
 
     function compileActiveBuffs(character, buffs) {
         var activeBuffs = [], msg;
@@ -89,7 +100,25 @@
             name: 'Bilbo Baggins',
             campaignName: 'Underhill Adventures',
             weapons: [
-                { name: 'Sting', attacks: [] }
+                {
+                    name: 'Sting',
+                    attacks: [
+                        {
+                            name: 'Main',
+                            toHit: 6,
+                            damage: 6,
+                            crit: 19,
+                            critMult: 2
+                        },
+                        {
+                            name: 'Second',
+                            toHit: 1,
+                            damage: 6,
+                            crit: 19,
+                            critMult: 2
+                        }
+                    ]
+                }
             ]
         }
     ];

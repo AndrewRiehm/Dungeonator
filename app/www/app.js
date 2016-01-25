@@ -91,6 +91,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   })
 
+  .state('tab.characters-weapon-attack-detail', {
+    url: '/characters/:characterName/:weaponName/:attackName',
+    views: {
+      'tab-campaigns': {
+        templateUrl: 'components/attacks/attack-details.html',
+        controller: 'AttackCtrl'
+      }
+    }
+  })
+
   .state('tab.buffs', {
       url: '/buffs',
       views: {

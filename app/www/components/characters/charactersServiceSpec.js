@@ -124,6 +124,13 @@
             expect(active.length).toBe(2);
         });
 
+        it('should be able to get a weapon by name', function() {
+            var bilbo = charactersService.get('Bilbo Baggins');
+            var weapon = charactersService.getWeapon(bilbo, 'Sting');
+            expect(weapon).not.toBeNull();
+            expect(weapon).toBeDefined();
+        });
+
 
     });
 })();

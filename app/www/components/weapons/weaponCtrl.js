@@ -11,7 +11,7 @@
         $scope.characterName = $stateParams.characterName;
         $scope.character = Characters.get($scope.characterName);
         $scope.weaponName = $stateParams.weaponName;
-        $scope.weapon = getWeapon($scope.character, $scope.weaponName);
+        $scope.weapon = Characters.getWeapon($scope.character, $scope.weaponName);
         if ($scope.weapon === null) {
             var msg = 'ERROR: could not get weapon with name "' + $scope.weaponName + '"';
             console.error(msg);
@@ -24,7 +24,6 @@
         $scope.activeBuffs = Characters.compileActiveBuffs($scope.character, Buffs.all());
         $scope.remove = remove;
         $scope.add = add;
-        $scope.getWeapon = getWeapon;
 
         $scope.rollOne = rollOne;
         $scope.rollAll = rollAll;
@@ -59,15 +58,6 @@
         console.info('rolling all: ', JSON.stringify(attacks));
         var rolls = Roller.rollAttacks(attacks, buffs);
         console.info('rolls: ', JSON.stringify(rolls));
-    }
-
-    function getWeapon(character, weaponName) {
-        for(var i in character.weapons) {
-            if (character.weapons[i].name === weaponName) {
-                return character.weapons[i];
-            }
-        }
-        return null;
     }
 
     function remove(weapon, attack) {

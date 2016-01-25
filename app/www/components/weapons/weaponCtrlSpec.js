@@ -29,12 +29,6 @@
             expect(controller).toBeDefined();
         });
 
-        it('should be able to get a weapon by name', function() {
-            var weapon = scope.getWeapon(scope.character, scope.weaponName);
-            expect(weapon).not.toBeNull();
-            expect(weapon).toBeDefined();
-        });
-
         it('should have a weapon', function() {
             expect(scope.weapon).not.toBeNull();
             expect(scope.weapon).toBeDefined();
