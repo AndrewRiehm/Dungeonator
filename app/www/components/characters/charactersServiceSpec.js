@@ -5,9 +5,44 @@
     describe('CharactersService', function () {
 
         var charactersService;
+
+        var testBuffs = [
+            {
+                name: 'Good Hope',
+                saves: {
+                    fort: 2,
+                    refl: 2,
+                    will: 2
+                },
+                attack: 2,
+                damage: 2,
+                skills: 2,
+                type: 'morale'
+            },
+            {
+                name: 'Inspire Courage',
+                attack: 3,
+                damage: 3,
+                type: 'competence'
+            },
+            {
+                name: 'Haste',
+                attack: 1,
+                saves: {
+                    refl: 2,
+                },
+                extraHit: true
+            },
+            {
+                name: 'Flanking',
+                attack: 2
+            }
+        ];
+
         var testCharacter = {
             name: 'Test Character',
-            campaignName: 'Underhill Adventures'
+            campaignName: 'Underhill Adventures',
+            activeBuffs: [ true, true, false, false]
         };
 
         var otherTestCharacter = {
@@ -78,5 +113,17 @@
             charactersService.remove(testCharacter);
             expect(charactersService.all().length).toBe(howMany - 1);
         });
+
+        it('should be able to compile active buffs', function() {
+            expect(charactersService.compileActiveBuffs).toBeDefined();
+            expect(typeof charactersService.compileActiveBuffs).toBe('function');
+
+            var active = charactersService.compileActiveBuffs(testCharacter, testBuffs);
+            expect(active).toBeDefined();
+            expect(Array.isArray(active)).toBeTruthy();
+            expect(active.length).toBe(2);
+        });
+
+
     });
 })();

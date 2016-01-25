@@ -96,7 +96,5 @@
             var newLen = scope.character.weapons.length;
             expect(newLen).toBe(len - 1);
         });
-
     });
-
 })();

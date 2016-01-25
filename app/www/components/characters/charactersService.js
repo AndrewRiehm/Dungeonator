@@ -11,8 +11,29 @@
             all: characterAll,
             add: characterAdd,
             remove: characterRemove,
-            get: characterGet
+            get: characterGet,
+            compileActiveBuffs: compileActiveBuffs
         };
+    }
+
+    function compileActiveBuffs(character, buffs) {
+        var activeBuffs = [], msg;
+
+        // If the size of list of active != size of list of buffs, THAT's
+        // a problem.  They have to match for this to work.
+        if (character.activeBuffs.length !== buffs.length) {
+            msg = 'ERROR: active buffs length does not match length of buffs array!';
+            console.error(msg);
+            throw msg;
+        }
+
+        // Compile the list of active buffs
+        for(var i in character.activeBuffs) {
+            if (character.activeBuffs[i]) {
+                activeBuffs.push(buffs[i]);
+            }
+        }
+        return activeBuffs;
     }
 
     function characterGet(characterName) {
@@ -68,7 +89,7 @@
             name: 'Bilbo Baggins',
             campaignName: 'Underhill Adventures',
             weapons: [
-                { name: 'sting', attacks: [] }
+                { name: 'Sting', attacks: [] }
             ]
         }
     ];
