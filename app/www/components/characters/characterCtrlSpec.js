@@ -2,19 +2,42 @@
 (function () {
     'use strict';
 
+    var CHARNAME = 'Bilbo Baggins';
+    var WEAPONNAME = 'Sting';
+    var testChar = {
+        name: CHARNAME,
+        weapons: [
+            { name: WEAPONNAME, attacks: [] }
+        ]
+    };
+    var testWeapon = {
+        name: 'Not Sting',
+        attacks: [ ]
+    };
+
     describe('CharacterCtrl', function () {
         beforeEach(module('starter.services'));
-        beforeEach(module('starter.controllers'));
+        beforeEach(
+            module('starter.controllers',
+                function($provide) {
+                    var charactersServiceMock = { 
+                        get: function() { return testChar; },
+                        getWeapon: function() { return testChar.weapons[0]; },
+                        compileActiveBuffs: function() { return []; }
+                    };
+                    $provide.value('Characters', charactersServiceMock);
+                }
+            )
+        );
 
         var controller, scope;
-        var testWeapon = { name: 'test', attacks: [] };
         beforeEach(inject(function ($rootScope, $controller) {
             scope = $rootScope.$new();
             controller = $controller('CharacterCtrl', {
                 $scope: scope,
                 $stateParams: {
                     campaignName: 'Underhill Adventures',
-                    characterName: 'Bilbo Baggins'
+                    characterName: CHARNAME
                 },
             });
         }));
@@ -85,14 +108,14 @@
         });
 
         it('should not let you add a duplicate weapon', function() {
-            var res = scope.addWeapon(scope.character, testWeapon);
+            var res = scope.addWeapon(scope.character, testChar.weapons[0]);
             expect(res).not.toBeNull();
-            expect(res.message).toBe('test is already taken');
+            expect(res.message).toBe(testChar.weapons[0].name + ' is already taken');
         });
 
         it('should be able to remove a weapon', function() {
             var len = scope.character.weapons.length;
-            scope.removeWeapon(scope.character, testWeapon);
+            scope.removeWeapon(scope.character, testChar.weapons[0]);
             var newLen = scope.character.weapons.length;
             expect(newLen).toBe(len - 1);
         });

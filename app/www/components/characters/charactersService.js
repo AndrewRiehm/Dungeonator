@@ -6,7 +6,12 @@
         .module('starter.services')
         .factory('Characters', charactersServiceFunc);
 
+    var $webStorage = null;
+    var CHARACTERS_KEY = 'characters';
+    var characters = [];
+
     function charactersServiceFunc(webStorage) {
+        $webStorage = webStorage;
         return {
             all: characterAll,
             add: characterAdd,
@@ -14,46 +19,26 @@
             get: characterGet,
             compileActiveBuffs: compileActiveBuffs,
             getWeapon: getWeapon,
-            save: function(character, cb) { save(webStorage, character, cb); },
-            load: function(charName, cb) { load(webStorage, charName, cb); },
-            destroy: function(charName, cb) { destroy(webStorage, charName, cb); }
+            save: save
         };
     }
 
-    function destroy(webStorage, charName, cb) {
-        var res = webStorage.local.remove(charName);
-        if (res && cb) {
-            cb(res, null);
-        }
-        else if (cb) {
-            cb(null, { message: 'ERROR: could not remove ' + charName });
-        }
-    }
-
-    function save(webStorage, character, cb) {
-        var res = webStorage.local.set(character.name, character);
+    function save() {
+        var res = $webStorage.local.set(CHARACTERS_KEY, characters);
         if (!res) {
-            var msg = 'ERROR: could not save ' + character.name + 'to webStorage.local!';
+            var msg = 'ERROR: could not save characters to webStorage.local!';
             console.error(msg);
-
-            if (cb) {
-                cb(null, { message: msg });
-            }
+            throw msg;
         }
-        else if (cb) {
-            cb(character, null);
-        }
+        return true;
     }
 
-    function load(webStorage, charName, cb) {
-        if (webStorage.local.has(charName)) {
-            var character = webStorage.local.get(charName);
-            if (character && cb) {
-                cb(character, null);
-            }
-        }
-        else if (cb) {
-            cb(null, { message: 'ERROR: could not retrieve ' + charName });
+    function load(overwrite) {
+        // If we're overwriting, or ...
+        // if we're not supposed to overwrite, but there's nothing there...
+        var condition = (overwrite === true) || (!overwrite && characters.length === 0);
+        if (condition && $webStorage.local.has(CHARACTERS_KEY)) {
+            characters = $webStorage.local.get(CHARACTERS_KEY);
         }
     }
 
@@ -92,6 +77,8 @@
     }
 
     function characterGet(characterName) {
+        load();
+
         for (var i = 0; i < characters.length; i++) {
             if (characters[i].name === characterName) {
                 return characters[i];
@@ -101,27 +88,37 @@
     }
 
     function characterRemove(character) {
+        load();
+
         characters.splice(characters.indexOf(character), 1);
+        save();
     }
 
     function characterAdd(character, cb) {
+        load();
+
         for(var index in characters) {
             var b = characters[index];
             if (b.name === character.name) {
-                if (cb) {
-                    cb({ message: 'Error: ' + character.name + ' already exists!' }, null);
-                }
+                ifcb(cb, { message: 'Error: ' + character.name + ' already exists!' }, null);
                 return;
             }
         }
         characters.push(character);
+        save();
 
+        ifcb(cb, null, character);
+    }
+
+    function ifcb(cb, res, err) {
         if (cb) {
-            cb(null, character);
+            cb(res, err);
         }
     }
 
     function characterAll(campaignName) {
+        load();
+
         if (campaignName) {
             var filterFunc = function(arg) {
                 return (arg.campaignName === campaignName);
@@ -130,41 +127,4 @@
         }
         return characters;
     }
-
-
-    // Might use a resource here that returns a JSON array
-    // Some fake testing data
-    var characters = [
-        {
-            name: 'Billy Connoly',
-            campaignName: 'Wrath of the Righteous',
-            weapons: []
-        },
-        {
-            name: 'Bilbo Baggins',
-            campaignName: 'Underhill Adventures',
-            weapons: [
-                {
-                    name: 'Sting',
-                    attacks: [
-                        {
-                            name: 'Main',
-                            toHit: 6,
-                            damage: 6,
-                            crit: 19,
-                            critMult: 2
-                        },
-                        {
-                            name: 'Second',
-                            toHit: 1,
-                            damage: 6,
-                            crit: 19,
-                            critMult: 2
-                        }
-                    ]
-                }
-            ]
-        }
-    ];
-
 })();

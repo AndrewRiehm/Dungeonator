@@ -39,16 +39,40 @@
             }
         ];
 
-        var testCharacter = {
-            name: 'Test Character',
-            campaignName: 'Underhill Adventures',
-            activeBuffs: [ true, true, false, false]
-        };
-
-        var otherTestCharacter = {
-            name: 'Ron Weasley',
-            campaignName: 'The Catacombs of Daigonelley'
-        };
+        var testChars = [
+            {
+                name: 'Billy Connoly',
+                campaignName: 'Wrath of the Righteous',
+                activeBuffs: [ true, true, false, false],
+                weapons: [ { name: 'Shilelagh', attacks: [] } ]
+            },
+            {
+                name: 'Bilbo Baggins',
+                campaignName: 'Underhill Adventures',
+                activeBuffs: [ true, true, false, false],
+                weapons: [
+                    {
+                        name: 'Sting',
+                        attacks: [
+                            {
+                                name: 'Main',
+                                toHit: 6,
+                                damage: 6,
+                                crit: 19,
+                                critMult: 2
+                            },
+                            {
+                                name: 'Second',
+                                toHit: 1,
+                                damage: 6,
+                                crit: 19,
+                                critMult: 2
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
 
         beforeEach(function() {
             module('starter.services');
@@ -69,12 +93,15 @@
         });
 
         it('should be able to get just the characters for a campaign', function() {
-            charactersService.add(otherTestCharacter);
-            var smallerList = charactersService.all(otherTestCharacter.campaignName);
+            charactersService.add(testChars[0]);
+            charactersService.add(testChars[1]);
+            var smallerList = charactersService.all(testChars[1].campaignName);
             var all = charactersService.all();
             expect(all.length).toBeGreaterThan(smallerList.length);
             expect(smallerList[0]).toBeDefined();
-            expect(smallerList[0].name).toBe(otherTestCharacter.name);
+            expect(smallerList[0].name).toBe(testChars[1].name);
+            charactersService.remove(testChars[1]);
+            charactersService.remove(testChars[0]);
         });
 
         it('should have a "remove" method', function() {
@@ -91,17 +118,17 @@
 
         it('should be able to add a character', function() {
             var howMany = charactersService.all().length;
-            charactersService.add(testCharacter);
+            charactersService.add(testChars[0]);
             expect(charactersService.all().length).toBe(howMany + 1);
         });
 
         it('should be able to get a character', function() {
-            var test = charactersService.get(testCharacter.name);
-            expect(test).toBe(testCharacter);
+            var test = charactersService.get(testChars[0].name);
+            expect(test).toBe(testChars[0]);
         });
 
         it('should not let you add a duplicate', function(done) {
-            charactersService.add(testCharacter, function(err) {
+            charactersService.add(testChars[0], function(err) {
                 expect(err).toBeDefined();
                 expect(err).not.toBeNull();
                 done();
@@ -110,7 +137,7 @@
 
         it('should be able to remove a character', function() {
             var howMany = charactersService.all().length;
-            charactersService.remove(testCharacter);
+            charactersService.remove(testChars[0]);
             expect(charactersService.all().length).toBe(howMany - 1);
         });
 
@@ -118,15 +145,15 @@
             expect(charactersService.compileActiveBuffs).toBeDefined();
             expect(typeof charactersService.compileActiveBuffs).toBe('function');
 
-            var active = charactersService.compileActiveBuffs(testCharacter, testBuffs);
+            var active = charactersService.compileActiveBuffs(testChars[0], testBuffs);
             expect(active).toBeDefined();
             expect(Array.isArray(active)).toBeTruthy();
             expect(active.length).toBe(2);
         });
 
         it('should be able to get a weapon by name', function() {
-            var bilbo = charactersService.get('Bilbo Baggins');
-            var weapon = charactersService.getWeapon(bilbo, 'Sting');
+            var testChar = testChars[0];
+            var weapon = charactersService.getWeapon(testChar, testChar.weapons[0].name);
             expect(weapon).not.toBeNull();
             expect(weapon).toBeDefined();
         });
@@ -136,49 +163,8 @@
             expect(charactersService.save).not.toBeNull();
         });
 
-        it('should have a load method', function() {
-            expect(charactersService.load).toBeDefined();
-            expect(charactersService.load).not.toBeNull();
-        });
-
-        it('should be able to save to persistent storage', function(done) {
-            charactersService.save(testCharacter, function(res, err) {
-                expect(err).toBeNull();
-                expect(res).toBe(testCharacter);
-                done();
-            });
-        });
-
-        it('should be able to load a character from persistent storage', function(done) {
-            charactersService.load(testCharacter.name, function(res, err) {
-                expect(res).toBeDefined();
-                expect(res.name).toBe(testCharacter.name);
-                expect(res.activeBuffs.length).toBe(testCharacter.activeBuffs.length);
-                expect(res.campaignName).toBe(testCharacter.campaignName);
-                expect(err).toBeNull();
-                done();
-            });
-        });
-
-        it('should have a destroy (from storage) method', function() {
-            expect(charactersService.destroy).toBeDefined();
-            expect(charactersService.destroy).not.toBeNull();
-        });
-
-        it('should be able to destroy a char from storage', function(done) {
-            charactersService.destroy(testCharacter.name, function(res, err) {
-
-                // Shouldn't be any problems, because we should have deleted it
-                expect(err).toBeNull();
-
-                charactersService.load(testCharacter.name, function(res, err) {
-                    // But now we *expect* problems, because we tried to load
-                    // something that shouldn't exist
-                    expect(err).toBeDefined();
-                    expect(res).toBeNull();
-                    done();
-                });
-            });
+        it('should be able to save to persistent storage', function() {
+            expect(charactersService.save()).toBeTruthy();
         });
     });
 })();
