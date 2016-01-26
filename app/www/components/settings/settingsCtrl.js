@@ -6,11 +6,12 @@
         .module('starter.controllers')
         .controller('SettingsCtrl', settingsCtrlFunc);
 
-    var $webStorage;
+    var $webStorage, _ionicPopup;
     var CHARACTERS_KEY = 'characters';
 
-    function settingsCtrlFunc($scope, webStorage) {
+    function settingsCtrlFunc($scope, webStorage, $ionicPopup) {
         $webStorage = webStorage;
+        _ionicPopup = $ionicPopup;
         $scope.webStorage = webStorage;
         $scope.CHARACTERS_KEY = CHARACTERS_KEY;
         $scope.characters = characters;
@@ -23,10 +24,12 @@
 
     function insertTestData() {
         $webStorage.local.set(CHARACTERS_KEY, characters);
+        _ionicPopup.alert({ title: 'Done!' });
     }
 
     function flushLocalData() {
         $webStorage.local.clear();
+        _ionicPopup.alert({ title: 'Done!' });
     }
 
     // Might use a resource here that returns a JSON array
