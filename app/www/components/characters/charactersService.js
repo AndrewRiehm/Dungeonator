@@ -6,15 +6,44 @@
         .module('starter.services')
         .factory('Characters', charactersServiceFunc);
 
-    function charactersServiceFunc() {
+    function charactersServiceFunc(webStorage) {
         return {
             all: characterAll,
             add: characterAdd,
             remove: characterRemove,
             get: characterGet,
             compileActiveBuffs: compileActiveBuffs,
-            getWeapon: getWeapon
+            getWeapon: getWeapon,
+            save: function(character, cb) { return save(webStorage, character, cb); },
+            load: function(charName, cb) { return load(webStorage, charName, cb); }
         };
+    }
+
+    function save(webStorage, character, cb) {
+        var res = webStorage.local.set(character.name, character);
+        if (!res) {
+            var msg = 'ERROR: could not save ' + character.name + 'to webStorage.local!';
+            console.error(msg);
+
+            if (cb) {
+                cb(null, { message: msg });
+            }
+        }
+        else if (cb) {
+            cb(character, null);
+        }
+    }
+
+    function load(webStorage, charName, cb) {
+        if (webStorage.local.has(charName)) {
+            var character = webStorage.local.get(charName);
+            if (character && cb) {
+                cb(character, null);
+            }
+        }
+        else if (cb) {
+            cb(null, { message: 'ERROR: could not retrieve ' + charName });
+        }
     }
 
     function getWeapon(character, weaponName) {

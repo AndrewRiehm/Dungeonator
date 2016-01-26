@@ -131,6 +131,34 @@
             expect(weapon).toBeDefined();
         });
 
+        it('should have a save method', function() {
+            expect(charactersService.save).toBeDefined();
+            expect(charactersService.save).not.toBeNull();
+        });
+
+        it('should have a load method', function() {
+            expect(charactersService.load).toBeDefined();
+            expect(charactersService.load).not.toBeNull();
+        });
+
+        it('should be able to save to persistent storage', function(done) {
+            charactersService.save(testCharacter, function(res, err) {
+                expect(err).toBeNull();
+                expect(res).toBe(testCharacter);
+                done();
+            });
+        });
+
+        it('should be able to load a character from persistent storage', function(done) {
+            charactersService.load(testCharacter.name, function(res, err) {
+                expect(res).toBeDefined();
+                expect(res.name).toBe(testCharacter.name);
+                expect(res.activeBuffs.length).toBe(testCharacter.activeBuffs.length);
+                expect(res.campaignName).toBe(testCharacter.campaignName);
+                expect(err).toBeNull();
+                done();
+            });
+        });
 
     });
 })();
