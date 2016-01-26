@@ -14,9 +14,20 @@
             get: characterGet,
             compileActiveBuffs: compileActiveBuffs,
             getWeapon: getWeapon,
-            save: function(character, cb) { return save(webStorage, character, cb); },
-            load: function(charName, cb) { return load(webStorage, charName, cb); }
+            save: function(character, cb) { save(webStorage, character, cb); },
+            load: function(charName, cb) { load(webStorage, charName, cb); },
+            destroy: function(charName, cb) { destroy(webStorage, charName, cb); }
         };
+    }
+
+    function destroy(webStorage, charName, cb) {
+        var res = webStorage.local.remove(charName);
+        if (res && cb) {
+            cb(res, null);
+        }
+        else if (cb) {
+            cb(null, { message: 'ERROR: could not remove ' + charName });
+        }
     }
 
     function save(webStorage, character, cb) {

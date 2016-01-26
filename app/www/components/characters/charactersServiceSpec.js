@@ -160,5 +160,25 @@
             });
         });
 
+        it('should have a destroy (from storage) method', function() {
+            expect(charactersService.destroy).toBeDefined();
+            expect(charactersService.destroy).not.toBeNull();
+        });
+
+        it('should be able to destroy a char from storage', function(done) {
+            charactersService.destroy(testCharacter.name, function(res, err) {
+
+                // Shouldn't be any problems, because we should have deleted it
+                expect(err).toBeNull();
+
+                charactersService.load(testCharacter.name, function(res, err) {
+                    // But now we *expect* problems, because we tried to load
+                    // something that shouldn't exist
+                    expect(err).toBeDefined();
+                    expect(res).toBeNull();
+                    done();
+                });
+            });
+        });
     });
 })();
