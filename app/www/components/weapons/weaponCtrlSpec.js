@@ -18,7 +18,8 @@
                     var charactersServiceMock = { 
                         get: function() { return testChar; },
                         getWeapon: function() { return testChar.weapons[0]; },
-                        compileActiveBuffs: function() { return []; }
+                        compileActiveBuffs: function() { return []; },
+                        save: function() { }
                     };
                     $provide.value('Characters', charactersServiceMock);
                 }

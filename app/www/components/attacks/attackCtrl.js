@@ -26,6 +26,11 @@
             console.error(msg);
             throw(msg);
         }
+        $scope.$watch('attack.name', Characters.save);
+        $scope.$watch('attack.toHit', Characters.save);
+        $scope.$watch('attack.damage', Characters.save);
+        $scope.$watch('attack.crit', Characters.save);
+        $scope.$watch('attack.critMult', Characters.save);
     }
 
     function getAttack(weapon, attackName) {

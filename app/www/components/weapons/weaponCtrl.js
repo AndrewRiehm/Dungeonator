@@ -6,7 +6,10 @@
         .module('starter.controllers')
         .controller('WeaponCtrl', ctrlFunc);
 
+    var _Characters;
     function ctrlFunc($scope, $stateParams, NewWidget, Characters, Roller, Buffs, $ionicPopup) {
+
+        _Characters = Characters;
 
         checkCharacter($scope, $stateParams, Characters, Buffs);
         checkWeapon($scope, $stateParams, Characters, Buffs);
@@ -132,6 +135,7 @@
             throw msg;
         }
         attacks.splice(indx, 1);
+        _Characters.save();
     }
 
     function add(weapon, attack) {
@@ -142,6 +146,7 @@
             }
         }
         weapon.attacks.push(attack);
+        _Characters.save();
         return null;
     }
 })();
