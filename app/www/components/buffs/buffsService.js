@@ -6,16 +6,34 @@
         .module('starter.services')
         .factory('Buffs', buffsServiceFunc);
 
-    function buffsServiceFunc() {
+    var BUFFS_KEY = 'buffs';
+    var _webStorage;
+    var buffs = [];
+
+    function buffsServiceFunc(webStorage) {
+        _webStorage = webStorage;
         return {
             all: buffAll,
             add: buffAdd,
             remove: buffRemove,
-            get: buffGet
+            get: buffGet,
+            save: save
         };
     }
 
+    function save() {
+        _webStorage.local.set(BUFFS_KEY, buffs);
+    }
+
+    function load() {
+        if (buffs.length === 0 && _webStorage.local.has(BUFFS_KEY)) {
+            buffs = _webStorage.local.get(BUFFS_KEY);
+        }
+    }
+
     function buffGet(buffName) {
+        load();
+
         for (var i = 0; i < buffs.length; i++) {
             if (buffs[i].name === buffName) {
                 return buffs[i];
@@ -25,10 +43,16 @@
     }
 
     function buffRemove(buff) {
+        load();
+
         buffs.splice(buffs.indexOf(buff), 1);
+
+        save();
     }
 
     function buffAdd(buff, cb) {
+        load();
+
         for(var index in buffs) {
             var b = buffs[index];
             if (b.name === buff.name) {
@@ -39,6 +63,7 @@
             }
         }
         buffs.push(buff);
+        save();
 
         if (cb) {
             cb(null, buff);
@@ -46,42 +71,7 @@
     }
 
     function buffAll() {
+        load();
         return buffs;
     }
-
-    // Might use a resource here that returns a JSON array
-    // Some fake testing data
-    var buffs = [
-        {
-            name: 'Good Hope',
-            saves: {
-                fort: 2,
-                refl: 2,
-                will: 2
-            },
-            toHit: 2,
-            damage: 2,
-            skills: 2,
-            type: 'morale'
-        },
-        {
-            name: 'Inspire Courage',
-            toHit: 3,
-            damage: 3,
-            type: 'competence'
-        },
-        {
-            name: 'Haste',
-            toHit: 1,
-            saves: {
-                refl: 2,
-            },
-            extraHit: true
-        },
-        {
-            name: 'Flanking',
-            toHit: 2
-        }
-    ];
-
 })();

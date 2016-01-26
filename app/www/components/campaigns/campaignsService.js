@@ -6,7 +6,12 @@
         .module('starter.services')
         .factory('Campaigns', campaignsServiceFunc);
 
-    function campaignsServiceFunc() {
+    var _webStorage;
+    var CAMPAIGNS_KEY = 'campaigns';
+    var campaigns = [];
+
+    function campaignsServiceFunc(webStorage) {
+        _webStorage = webStorage;
         return {
             all: campaignAll,
             add: campaignAdd,
@@ -15,7 +20,18 @@
         };
     }
 
+    function load() {
+        if (campaigns.length === 0 && _webStorage.local.has(CAMPAIGNS_KEY)) {
+            campaigns = _webStorage.local.get(CAMPAIGNS_KEY);
+        }
+    }
+
+    function save() {
+        _webStorage.local.set(CAMPAIGNS_KEY, campaigns);
+    }
+
     function campaignGet(campaignName) {
+        load();
         for (var i = 0; i < campaigns.length; i++) {
             if (campaigns[i].name === campaignName) {
                 return campaigns[i];
@@ -25,10 +41,14 @@
     }
 
     function campaignRemove(campaign) {
+        load();
         campaigns.splice(campaigns.indexOf(campaign), 1);
+        save();
     }
 
     function campaignAdd(campaign, cb) {
+        load();
+
         for(var index in campaigns) {
             var b = campaigns[index];
             if (b.name === campaign.name) {
@@ -39,6 +59,7 @@
             }
         }
         campaigns.push(campaign);
+        save();
 
         if (cb) {
             cb(null, campaign);
@@ -46,18 +67,7 @@
     }
 
     function campaignAll() {
+        load();
         return campaigns;
     }
-
-    // Might use a resource here that returns a JSON array
-    // Some fake testing data
-    var campaigns = [
-        {
-            name: 'Wrath of the Righteous',
-        },
-        {
-            name: 'Underhill Adventures',
-        }
-    ];
-
 })();

@@ -26,6 +26,10 @@
             expect(buffService).toBeDefined();
         });
 
+        it('should have a "save" method', function() {
+            expect(angular.isFunction(buffService.save)).toBe(true);
+        });
+
         it('should have an "all" method', function() {
             expect(angular.isFunction(buffService.all)).toBe(true);
         });
