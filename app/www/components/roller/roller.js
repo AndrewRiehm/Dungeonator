@@ -73,7 +73,7 @@
     function roll(x, y, z) {
         var val = 0;
         for (var i = 0; i < x; ++i) {
-            val += getRandomInt(1, y);
+            val += getRandomInt(y);
         }
         val += z;
         return val;
@@ -81,8 +81,8 @@
 
     // Returns a random integer between min (included) and max (excluded)
     // Using Math.round() will give you a non-uniform distribution!
-    function getRandomInt(min, max) {
-      return Math.floor(Math.random() * (max - min)) + min;
+    function getRandomInt(max) {
+      return Math.ceil(Math.random() * (max));
     }
 
     // Compiles all buffs into a single buff structure
