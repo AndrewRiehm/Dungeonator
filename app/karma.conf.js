@@ -17,6 +17,7 @@ module.exports = function(config) {
     files: [
       'www/lib/ionic/js/ionic.bundle.js',
       'www/lib/angular-webstorage/angular-webstorage.js',
+      'www/lib/angular-clipboard/angular-clipboard.js',
       'www/lib/angular-mocks/angular-mocks.js',
       'www/app.js',
       'www/components/**/*.js'
