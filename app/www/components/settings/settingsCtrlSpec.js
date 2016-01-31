@@ -18,10 +18,6 @@
             expect(controller).toBeDefined();
         });
 
-        it('should have settings', function() {
-            expect(scope.settings).toBeDefined();
-        });
-
         it('should have a method for inserting test data', function() {
             expect(scope.insertTestData).toBeDefined();
             expect(typeof scope.insertTestData).toBe('function');

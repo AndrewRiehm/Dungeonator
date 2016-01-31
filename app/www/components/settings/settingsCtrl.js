@@ -17,9 +17,6 @@
         $scope.webStorage = webStorage;
         $scope.CHARACTERS_KEY = CHARACTERS_KEY;
         $scope.characters = characters;
-        $scope.settings = {
-            enableFriends: true
-        };
         $scope.insertTestData = insertTestData;
         $scope.flushLocalData = flushLocalData;
     }
