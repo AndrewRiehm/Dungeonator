@@ -12,6 +12,43 @@
                         copyText: function(text) { _clipboardData = text; }
                     };
                     $provide.value('clipboard', clipboardMock);
+
+                    /*
+                    // TODO: When PhantomJS starts supporting Promises, revisit this
+
+                    var ionicPopupMock = {
+                        prompt: function() {
+                            return new Promise(
+                                function(resolve, reject) {
+                                    var obj = {
+                                        buffs: _buffs,
+                                        campaigns: [],
+                                        characters: []
+                                    };
+                                    resolve(JSON.stringify(obj));
+                                }
+                            );
+                        },
+                        alert: function() { }
+                    };
+                    $provide.value('$ionicPopup', ionicPopupMock);
+                    */
+
+                    var _data = {};
+                    var webStorageMock = {
+                        local: {
+                            get: function(key) {
+                                if (!_data[key]) { return null; }
+                                return _data[key];
+                            },
+                            set: function(key, val) { _data[key] = val; },
+                            has: function(key) {
+                                return (undefined !== _data[key]);
+                            },
+                            clear: function() { _data = {}; }
+                        }
+                    };
+                    $provide.value('webStorage', webStorageMock);
                 }
             )
         );
@@ -70,6 +107,19 @@
             scope.exportToClipboard();
             expect(_clipboardData).not.toBeNull();
             expect(_clipboardData).toBeDefined();
+        });
+
+        it('should have an import method', function() {
+            expect(scope.importFromString).not.toBeNull();
+            expect(scope.importFromString).toBeDefined();
+        });
+
+        it('should be able to import from a string', function() {
+            // TODO: can't really test this, as it relies on ionicPopup.prompt,
+            // ... and that returns a Promise, but PhantomJS doesn't support
+            // ... Promises yet.  So... just... call this and hope it doesn't
+            // ... throw an exception?
+            scope.importFromString();
         });
     });
 })();

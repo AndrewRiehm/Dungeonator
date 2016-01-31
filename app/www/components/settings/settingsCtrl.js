@@ -6,33 +6,64 @@
         .module('starter.controllers')
         .controller('SettingsCtrl', settingsCtrlFunc);
 
-    var $webStorage, _ionicPopup, $clipboard;
+    var $webStorage, _ionicPopup, $clipboard, _Buffs, _Campaigns, _Characters;
     var CHARACTERS_KEY = 'characters';
     var CAMPAIGNS_KEY = 'campaigns';
     var BUFFS_KEY = 'buffs';
 
-    function settingsCtrlFunc($scope, webStorage, clipboard, $ionicPopup) {
+    function settingsCtrlFunc($scope, Buffs, Campaigns, Characters, webStorage, clipboard, $ionicPopup) {
         $webStorage = webStorage;
         $clipboard = clipboard;
         _ionicPopup = $ionicPopup;
+        _Buffs = Buffs;
+        _Campaigns = Campaigns;
+        _Characters = Characters;
+
         $scope.webStorage = webStorage;
         $scope.clipboard = clipboard;
+        $scope.BUFFS_KEY = BUFFS_KEY;
         $scope.CHARACTERS_KEY = CHARACTERS_KEY;
         $scope.characters = characters;
         $scope.insertTestData = insertTestData;
         $scope.flushLocalData = flushLocalData;
         $scope.exportToClipboard = exportToClipboard;
+        $scope.importFromString = importFromString;
+    }
+
+    function importFromString() {
+        _ionicPopup.prompt({
+            title: 'Import Data',
+            template: 'Paste in the datas',
+            inputType: 'text',
+            inputPlaceholder: 'JSON data'
+         }).then(function(res) {
+            var data = JSON.parse(res);
+            var i;
+
+            // Make sure we're just adding to what's there:
+            for (i in data.buffs) {
+                _Buffs.add(data.buffs[i]);
+            }
+            for (i in data.campaigns) {
+                _Campaigns.add(data.campaigns[i]);
+            }
+            for (i in data.characters) {
+                _Characters.add(data.characters[i]);
+            }
+            _ionicPopup.alert({ title: 'Done importing!' });
+         });
     }
 
     function exportToClipboard() {
         var data = {
-            characters: $webStorage.local.get(CHARACTERS_KEY),
-            campaigns: $webStorage.local.get(CAMPAIGNS_KEY),
-            buffs: $webStorage.local.get(BUFFS_KEY)
+            buffs: _Buffs.all(),
+            campaigns: _Campaigns.all(),
+            characters: _Characters.all()
         };
 
         var string = JSON.stringify(data);
         $clipboard.copyText(string);
+        _ionicPopup.alert({ title: 'Copied to clipboard!' });
     }
 
     function insertTestData() {
