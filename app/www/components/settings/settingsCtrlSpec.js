@@ -2,9 +2,19 @@
 (function() {
     'use strict';
 
+    var _clipboardData;
     describe('SettingsCtrl', function() {
         beforeEach(module('starter.services'));
-        beforeEach(module('starter.controllers'));
+        beforeEach(
+            module('starter.controllers',
+                function($provide) {
+                    var clipboardMock = {
+                        copyText: function(text) { _clipboardData = text; }
+                    };
+                    $provide.value('clipboard', clipboardMock);
+                }
+            )
+        );
 
         var controller, scope;
         beforeEach(inject(function ($rootScope, $controller) {
@@ -49,6 +59,17 @@
             scope.flushLocalData();
             var foo = scope.webStorage.local.get('foo');
             expect(foo).toBeNull();
+        });
+
+        it('should have an exportToClipboard method', function() {
+            expect(scope.exportToClipboard).not.toBeNull();
+            expect(scope.exportToClipboard).toBeDefined();
+        });
+
+        it('should be able to export saved data to clipboard', function() {
+            scope.exportToClipboard();
+            expect(_clipboardData).not.toBeNull();
+            expect(_clipboardData).toBeDefined();
         });
     });
 })();

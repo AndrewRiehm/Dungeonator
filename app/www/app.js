@@ -5,7 +5,7 @@
 
     // Forward declaration of controllers module
     angular
-        .module('starter.controllers', ['ionic']);
+        .module('starter.controllers', ['ionic', 'angular-clipboard']);
 
     // Forward declaration of services module
     angular
