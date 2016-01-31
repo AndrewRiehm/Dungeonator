@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# THIS NEEDS TO GET PUT IN <projectDir>/.git/hooks/
+
+# Where the cool stuff lives
+cd app
+
+# Run the tests
+npm run test-once
+
+# Check for lint
+./node_modules/.bin/jshint www/components/
